@@ -33,7 +33,7 @@
 
 <br />
 
-![Django React Datta Able - Open-source full stack product buult in Django and React.](https://user-images.githubusercontent.com/51070104/127103478-f40f8084-dc19-47bd-b1e6-6f7f4a35d91a.png)
+![Django React Datta Able - Open-source full stack product built in Django and React.](https://user-images.githubusercontent.com/51070104/127129620-bae3b6b3-eb4f-4ad7-a694-5a3c1d6e37cb.png)
 
 <br />
 
