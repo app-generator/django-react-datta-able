@@ -9,7 +9,7 @@
 - Modern aesthetics UI design - Designed by [CodedThemes](https://codedthemes.com/)
 - React, Redux, Redux-persist
 - Authentication: JWT Login/Register/Logout
-- Backend: [Django API Server](https://github.com/app-generator/api-server-django)
+- Backend: [Django API Server](https://github.com/app-generator/api-server-django) 
 
 <br />
 
@@ -18,7 +18,8 @@
 - [Django React Datta Able](https://appseed.us/product/react-node-js-datta-able) - product page
 - [Django React Datta Able](https://react-node-js-datta-able.appseed-srv1.com/) - LIVE Demo
 - [Django React Datta Able](https://docs.appseed.us/products/react/node-js-datta-able) - product documentation
-- Support via **Github** (issues tracker) and [Discord](https://appseed.us/support) - LIVE Assistance 
+- Download Backend: [Django API Server 📥](https://github.com/app-generator/api-server-django/archive/refs/heads/main.zip)
+- Donwnload Frontend: [React Datta Able 📥](https://github.com/app-generator/react-node-js-datta-able/archive/refs/heads/main.zip)  
 
 <br >
 
