@@ -1,6 +1,6 @@
 # [Django React Datta Able](https://appseed.us/product/django-react-datta-able)
 
-**Datta Able** is an open-source **React Dashboard** that provides a colorful and modern design. Datta Able React Free is the most stylised React Free Admin Template, around all other admin templates in the market. The product comes with a simple JWT authentication flow: login/register/logout powered by a simple Django API Server built on top of DRF Library.
+Open-source full-stack seed project coded in React and Django on top of a modern design from CodedThemes. The **[Django React](https://appseed.us/product/django-react-datta-able)** codebase is already configured with an SQLite database, API, and JWT token-based authentication flow. **Datta Able** is an open-source **React Dashboard** that provides a colorful and modern design. This fullstack product comes with a simple JWT authentication flow: login/register/logout powered by a simple Django API Server built on top of **DRF Library**.
 
 <br />
 
