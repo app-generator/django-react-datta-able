@@ -17,7 +17,7 @@
 
 - [Django React Datta Able](https://appseed.us/product/django-react-datta-able) - product page
 - [Django React Datta Able](https://django-react-datta-able.appseed-srv1.com/) - LIVE Demo
-- [Django React Datta Able](https://docs.appseed.us/products/react/node-js-datta-able) - product documentation
+- [Django React Datta Able](https://docs.appseed.us/products/react/django-datta-able) - product documentation
 - Download Backend: [Django API Server 📥](https://github.com/app-generator/api-server-django/archive/refs/heads/main.zip)
 - Donwnload Frontend: [React Datta Able 📥](https://github.com/app-generator/react-node-js-datta-able/archive/refs/heads/main.zip)  
 
