@@ -1,12 +1,12 @@
 # [Django React Datta Able](https://appseed.us/product/django-react-datta-able)
 
-Open-source full-stack seed project coded in React and Django on top of a modern design from CodedThemes. The **[Django React](https://appseed.us/product/django-react-datta-able)** codebase is already configured with an SQLite database, API, and JWT token-based authentication flow. **Datta Able** is an open-source **React Dashboard** that provides a colorful and modern design. This fullstack product comes with a simple JWT authentication flow: login/register/logout powered by a simple Django API Server built on top of **DRF Library**.
+Open-source full-stack seed project coded in React and Django on top of a modern design from CodedThemes. The **[Django React](https://appseed.us/product/django-react-datta-able)** codebase is already configured with an SQLite database, API (via **DRF**), and JWT token-based authentication flow. **Datta Able** is an open-source **React Dashboard** that provides a colorful and modern design. 
 
 <br />
 
 > Features
 
-- Modern aesthetics UI design - Designed by [CodedThemes](https://codedthemes.com/)
+- Modern aesthetics UI design - Designed by [CodedThemes](https://bit.ly/37fF9RT)
 - React, Redux, Redux-persist
 - Authentication: JWT Login/Register/Logout
 - Backend: [Django API Server](https://github.com/app-generator/api-server-django) 
