@@ -52,6 +52,10 @@ INSTALLED_APPS = [
     "api",
     "api.user",
     "api.authentication",
+    "api.home",
+    "api.google_ads",
+    "api.pinterest",
+    "api.meta"
 ]
 
 MIDDLEWARE = [
@@ -89,15 +93,23 @@ WSGI_APPLICATION = "core.wsgi.application"
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
 DATABASES = {
-    "default": {
-        "ENGINE"  : env("DB_ENGINE"  , default="django.db.backends.sqlite3"),
-        "NAME"    : env("DB_DATABASE", default=os.path.join(BASE_DIR, "db.sqlite3")),
-        "USER"    : env("DB_USER"    , default=None),
-        "PASSWORD": env("DB_PASSWORD", default=None),
-        "HOST"    : env("DB_HOST"    , default=None),
-        "PORT"    : env("DB_PORT"    , default=None),
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': 'db.sqlite3',
     }
 }
+
+
+# DATABASES = {
+#     "default": {
+#         "ENGINE"  : env("DB_ENGINE"  , default="django.db.backends.sqlite3"),
+#         "NAME"    : env("DB_DATABASE", default=os.path.join(BASE_DIR, "db.sqlite3")),
+#         "USER"    : env("DB_USER"    , default=None),
+#         "PASSWORD": env("DB_PASSWORD", default=None),
+#         "HOST"    : env("DB_HOST"    , default=None),
+#         "PORT"    : env("DB_PORT"    , default=None),
+#     }
+# }
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
