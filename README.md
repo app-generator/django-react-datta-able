@@ -52,10 +52,7 @@ Simple starter built with Python / Django Rest / Sqlite3 and JWT Auth. The authe
 
 > How to use the code
 
-**Clone the sources**
-
 ```bash
-$ git clone https://github.com/app-generator/api-server-django.git
 $ cd api-server-django
 ```
 
@@ -87,10 +84,8 @@ The API server will start using the default port `5000`.
 
 To use the product Node JS (>= 12.x) is required and GIT to clone/download the project from the public repository.
 
-**Step #1** - Clone the project
 
 ```bash
-$ git clone https://github.com/app-generator/react-datta-able-dashboard.git
 $ cd react-datta-able-dashboard
 ```
 
