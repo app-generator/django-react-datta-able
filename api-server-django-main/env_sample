@@ -1,0 +1,9 @@
+SECRET_KEY="insecure-S#perS3crEt_007_=0insecure-S#perS3crEt_007"
+DEBUG=True
+DJANGO_ALLOWED_HOSTS=localhost 127.0.0.1 [::1]
+DB_ENGINE=django.db.backends.sqlite3
+DATABASE=db.sqlite3
+GOOGLE_CLIENT_ID=""
+GOOGLE_CLIENT_SECRET=""
+GOOGLE_PROJECT_ID=""
+GOOGLE_DEVELOPER_TOKEN="xUwFq_XrlS2p3Lp6X_1eHg"
