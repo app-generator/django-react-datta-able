@@ -4,9 +4,9 @@ import { Row, Col, Button, Alert } from 'react-bootstrap';
 
 import * as Yup from 'yup';
 import { Formik } from 'formik';
-import axios from 'axios';
+import axios from '../../../utils/Api';
 import useScriptRef from '../../../hooks/useScriptRef';
-import { API_SERVER } from './../../../config/constant';
+
 
 const RestRegister = ({ className, ...rest }) => {
     let history = useHistory();
@@ -29,7 +29,7 @@ const RestRegister = ({ className, ...rest }) => {
                 onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
                     try {
                         axios
-                            .post(API_SERVER + 'users/register', {
+                            .post('users/register', {
                                 username: values.username,
                                 password: values.password,
                                 email: values.email

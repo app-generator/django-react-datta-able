@@ -12,6 +12,13 @@ const menuItems = {
                     type: 'item',
                     url: '/app/dashboard/default',
                     icon: 'feather icon-home'
+                },
+                {
+                    id: 'ads',
+                    title: 'Ads Accounts',
+                    type: 'item',
+                    url: '/app/ads-enable/accounts',
+                    icon: 'feather icon-home'
                 }
             ]
         },
@@ -178,7 +185,7 @@ const menuItems = {
                     external: true
                 }
             ]
-        }        
+        }
     ]
 };
 

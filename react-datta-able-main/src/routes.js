@@ -67,6 +67,11 @@ const routes = [
                 path: '/app/dashboard/default',
                 component: lazy(() => import('./views/dashboard/DashDefault'))
             },
+            {
+                exact: true,
+                path: '/app/ads-enable/accounts',
+                component: lazy(() => import('./views/ads/AdsEnable'))
+            },
 
             {
                 exact: true,
