@@ -62,7 +62,6 @@ const accountReducer = (state = initialState, action) => {
             return {
                 ...state,
                 isLoggedIn: true,
-                disable_google:true,
                 window_location:true,
                 window_url
             };
@@ -94,6 +93,7 @@ const accountReducer = (state = initialState, action) => {
                 isLoggedIn: true,
                 disable_google: true,
                 account_id,
+                show_form: false,
                 message
             };
         }

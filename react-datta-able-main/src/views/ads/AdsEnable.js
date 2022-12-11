@@ -17,8 +17,7 @@ const AdsEnable = () => {
     };
 
     const accounts = useSelector((state) => state.account);
-    const { ads_accounts, ad_platform, disable_google, disable_meta, disable_twiter, token, show_form } =
-        accounts;
+    const { ads_accounts, ad_platform, disable_google, disable_meta, disable_twiter, token, show_form, message } = accounts;
 
     useEffect(() => {
         const values = queryString.parse(location.search);
@@ -59,13 +58,13 @@ const AdsEnable = () => {
                                     <i className="fab fa-google-plus-g text-c-red f-36" />
                                 </div>
                                 <div className="col text-right">
-                                    {disable_google ? (
+                                    {disable_google & (message == 'success') ? (
                                         <>
                                             <Button
                                                 onClick={() => disableGoogle()}
                                                 aria-controls="basic-collapse"
                                                 aria-expanded={show_form}
-                                                variant="danger"
+                                                variant="success"
                                             >
                                                 Disable Google Ads
                                             </Button>
@@ -98,7 +97,7 @@ const AdsEnable = () => {
                                     <i className="fab fa-twitter text-c-blue f-36" />
                                 </div>
                                 <div className="col text-right">
-                                    {disable_twiter ? (
+                                    {disable_twiter & (message == 'success') ? (
                                         <>
                                             <Button onClick={() => disableGoogle()} aria-controls="basic-collapse" variant="primary">
                                                 Disable Twitter Ads
@@ -125,7 +124,7 @@ const AdsEnable = () => {
                                     <i className="fab fa-facebook-f text-primary f-36" />
                                 </div>
                                 <div className="col text-right">
-                                    {disable_meta ? (
+                                    {disable_meta & (message == 'success') ? (
                                         <>
                                             <Button onClick={() => disableGoogle()} aria-controls="basic-collapse" variant="primary">
                                                 Disable Meta Ads
