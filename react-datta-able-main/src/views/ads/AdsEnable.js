@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Row, Col, Card, Button, Form, Collapse } from 'react-bootstrap';
+import { Row, Col, Card, Button, Form ,Modal} from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation,useHistory } from 'react-router-dom';
 import queryString from 'query-string';
@@ -7,6 +7,7 @@ import { googleAuthenticateStart, googleAuthenticate, googleSubmitAds, googleDis
 
 const AdsEnable = () => {
     const [formME, setFormME] = useState({});
+    
     const dispatch = useDispatch();
     let location = useLocation();
     const history =useHistory()
@@ -19,13 +20,11 @@ const AdsEnable = () => {
     const accounts = useSelector((state) => state.account);
     const { ads_accounts, ad_platform, disable_google, disable_meta, disable_twiter, token, show_form, message } = accounts;
 
+
     useEffect(() => {
         const values = queryString.parse(location.search);
         const state = values.state ? values.state : null;
         const code = values.code ? values.code : null;
-
-        console.log('State: ' + state);
-        console.log('Code: ' + code);
 
         if (state && code) {
             dispatch(googleAuthenticate(token, state, code));
@@ -58,7 +57,7 @@ const AdsEnable = () => {
                                     <i className="fab fa-google-plus-g text-c-red f-36" />
                                 </div>
                                 <div className="col text-right">
-                                    {disable_google & (message == 'success') ? (
+                                    {disable_google & (message === 'success') ? (
                                         <>
                                             <Button
                                                 onClick={() => disableGoogle()}
@@ -97,7 +96,7 @@ const AdsEnable = () => {
                                     <i className="fab fa-twitter text-c-blue f-36" />
                                 </div>
                                 <div className="col text-right">
-                                    {disable_twiter & (message == 'success') ? (
+                                    {disable_twiter & (message === 'success') ? (
                                         <>
                                             <Button onClick={() => disableGoogle()} aria-controls="basic-collapse" variant="primary">
                                                 Disable Twitter Ads
@@ -124,7 +123,7 @@ const AdsEnable = () => {
                                     <i className="fab fa-facebook-f text-primary f-36" />
                                 </div>
                                 <div className="col text-right">
-                                    {disable_meta & (message == 'success') ? (
+                                    {disable_meta & (message === 'success') ? (
                                         <>
                                             <Button onClick={() => disableGoogle()} aria-controls="basic-collapse" variant="primary">
                                                 Disable Meta Ads
@@ -143,48 +142,34 @@ const AdsEnable = () => {
                         </Card.Body>
                     </Card>
                 </Col>
-                <Collapse in={show_form}>
-                    <Col sm={12}>
-                        <div id="basic-collapse">
-                            <Card>
-                                <Card.Header>
-                                    <Card.Title as="h5">Ads Forms</Card.Title>
-                                </Card.Header>
-                                <Card.Body>
-                                    <Row>
-                                        <Col md={6}>
-                                            <Form.Group controlId="exampleForm.ControlSelect1">
-                                                <Form.Label>Select Account</Form.Label>
-                                                <Form.Control
-                                                    as="select"
-                                                    name="account_id"
-                                                    onChange={handleChange}
-                                                    value={formME?.account_id || ''}
-                                                >
-                                                    {ads_accounts?.map((acc) => {
-                                                        return (
-                                                            <option key={acc.account_name} value={acc.account_id}>
-                                                                {acc.account_id}
-                                                            </option>
-                                                        );
-                                                    })}
-                                                </Form.Control>
-                                            </Form.Group>
-                                            <Button
-                                                variant="primary"
-                                                onClick={(e) => {
-                                                    handleSubmit(e, formME);
-                                                }}
-                                            >
-                                                Submit
-                                            </Button>
-                                        </Col>
-                                    </Row>
-                                </Card.Body>
-                            </Card>
-                        </div>
-                    </Col>
-                </Collapse>
+                <Modal show={show_form} size="md" aria-labelledby="contained-modal-title-vcenter" centered>
+                    <Modal.Body>
+                        <Form>
+                            <Form.Group controlId="exampleForm.ControlSelect1">
+                                <Form.Label>Select Account</Form.Label>
+                                <Form.Control as="select" name="account_id" onChange={handleChange} value={formME?.account_id || ''}>
+                                    {ads_accounts?.map((acc) => {
+                                        return (
+                                            <option key={acc.account_name} value={acc.account_id}>
+                                                {acc.account_id}
+                                            </option>
+                                        );
+                                    })}
+                                </Form.Control>
+                            </Form.Group>
+                        </Form>
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <Button
+                            variant="primary"
+                            onClick={(e) => {
+                                handleSubmit(e, formME);
+                            }}
+                        >
+                            Submit
+                        </Button>
+                    </Modal.Footer>
+                </Modal>
             </Row>
         </React.Fragment>
     );
