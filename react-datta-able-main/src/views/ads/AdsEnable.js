@@ -6,12 +6,15 @@ import queryString from 'query-string';
 import {
     googleAuthenticateStart,
     googleAuthenticate,
-    googleSubmitAds,
+    SubmitAds,
     googleDisableAds,
     closeModal,
-    googleAccountAds
+    getAccountAdsGoogle,
+    metaAuthenticateStart,
+    metaAuthenticate,
+    metaDisableAds,
+    getAccountAdsMeta
 } from '../../store/googleAction';
-import { metaAuthenticateStart, metaAuthenticate, metaSubmitAds, metaDisableAds } from '../../store/metaAction';
 
 const AdsEnable = () => {
     const [formME, setFormME] = useState({});
@@ -31,11 +34,12 @@ const AdsEnable = () => {
     const handleClose = () => {
         dispatch(closeModal());
     };
-    useEffect(() => {
-        if (account_id) {
-            dispatch(googleAccountAds(token, account_id));
-        }
-    }, [account_id]);
+    // useEffect(() => {
+    //     if (account_id.google || account_id.meta) {
+    //     }
+    //     dispatch(getAccountAdsMeta(token));
+    //     dispatch(getAccountAdsGoogle(token));
+    // }, [account_id.google || account_id.meta]);
 
     useEffect(() => {
         const values = queryString.parse(location.search);
@@ -54,7 +58,7 @@ const AdsEnable = () => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        dispatch(googleSubmitAds(token, formME.account_id, ad_platform));
+        dispatch(SubmitAds(token, formME.account_id, ad_platform));
         handleClose();
         history.push('/app/ads-enable/accounts');
     };
@@ -152,7 +156,7 @@ const AdsEnable = () => {
                                 <div className="col text-right">
                                     {disable_meta & (message === 'success') ? (
                                         <>
-                                            <Button onClick={() => disableMeta()} aria-controls="basic-collapse" variant="primary">
+                                            <Button onClick={() => disableMeta()} aria-controls="basic-collapse" variant="success">
                                                 Disable Meta Ads
                                             </Button>
                                             <h5 className="col text-right">{accounts?.account_id.meta}</h5>

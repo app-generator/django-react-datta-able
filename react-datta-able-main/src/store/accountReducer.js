@@ -14,6 +14,10 @@ import {
     META_ADS_ENABLE_FAIL,
     META_ADS_DISABLE,
     CLOSE_MODAL,
+    GET_META_ACCOUNT_SUCCESS,
+    GET_META_ACCOUNT_FAIL,
+    GET_GOOGLE_ACCOUNT_FAIL,
+    GET_GOOGLE_ACCOUNT_SUCCESS
 } from './actions';
 
 export const initialState = {
@@ -29,13 +33,13 @@ export const initialState = {
     show_form: false,
     window_url: '',
     account_id: {
-        "meta":"",
-        "google":"",
-        "twitter":"",
-        "pinterest":""
+        meta: '',
+        google: '',
+        twitter: '',
+        pinterest: ''
     },
     window_location: false,
-    message:''
+    message: ''
 };
 
 //-----------------------|| ACCOUNT REDUCER ||-----------------------//
@@ -68,12 +72,35 @@ const accountReducer = (state = initialState, action) => {
                 user: null
             };
         }
+        // google
+        case GET_GOOGLE_ACCOUNT_SUCCESS: {
+            const { message, account_id } = action.payload;
+            return {
+                ...state,
+                message,
+                disable_google: true,
+                account_id: {
+                    ...state.account_id,
+                    google: account_id
+                }
+            };
+        }
+        case GET_GOOGLE_ACCOUNT_FAIL: {
+            return {
+                ...state,
+                disable_google: false,
+                account_id: {
+                    ...state.account_id,
+                    google: ''
+                }
+            };
+        }
         case GOOGLE_ADS_START: {
             const { window_url } = action.payload;
             return {
                 ...state,
                 isLoggedIn: true,
-                window_location:true,
+                window_location: true,
                 window_url
             };
         }
@@ -105,7 +132,7 @@ const accountReducer = (state = initialState, action) => {
                 disable_google: true,
                 account_id: {
                     ...state.account_id,
-                    google: account_id,
+                    google: account_id
                 },
                 show_form: false,
                 message
@@ -118,16 +145,42 @@ const accountReducer = (state = initialState, action) => {
                 disable_google: false,
                 window_url: '',
                 show_form: false,
-                account_id: ''
+                account_id: {
+                    ...state.account_id,
+                    google: ''
+                }
             };
         }
-            // META
+
+        // META
+
+        case GET_META_ACCOUNT_SUCCESS: {
+            const { account_id } = action.payload;
+            return {
+                ...state,
+                disable_meta: true,
+                account_id: {
+                    ...state.account_id,
+                    meta: account_id
+                }
+            };
+        }
+        case GET_META_ACCOUNT_FAIL: {
+            return {
+                ...state,
+                disable_meta: false,
+                account_id: {
+                    ...state.account_id,
+                    meta: ''
+                }
+            };
+        }
         case META_ADS_START: {
             const { window_url } = action.payload;
             return {
                 ...state,
                 isLoggedIn: true,
-                window_location:true,
+                window_location: true,
                 window_url
             };
         }
@@ -159,7 +212,7 @@ const accountReducer = (state = initialState, action) => {
                 disable_meta: true,
                 account_id: {
                     ...state.account_id,
-                    meta: account_id,
+                    meta: account_id
                 },
                 show_form: false,
                 message
@@ -172,7 +225,10 @@ const accountReducer = (state = initialState, action) => {
                 disable_meta: false,
                 window_url: '',
                 show_form: false,
-                account_id: ''
+                account_id: {
+                    ...state.account_id,
+                    meta: ''
+                }
             };
         }
         case CLOSE_MODAL: {
@@ -180,7 +236,7 @@ const accountReducer = (state = initialState, action) => {
                 ...state,
                 show_form: false
             };
-            }
+        }
         default: {
             return { ...state };
         }
