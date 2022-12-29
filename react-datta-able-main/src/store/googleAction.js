@@ -5,13 +5,18 @@ import {
     GOOGLE_ADS_ENABLE_FAIL,
     GOOGLE_ADS_DISABLE,
     GOOGLE_ADS_DISABLE_FAIL,
-    GOOGLE_ADS_START
+    GOOGLE_ADS_START,
+    CLOSE_MODAL
 } from './actions';
 import axios from '../utils/Api';
 
 
 
-
+export const closeModal = () => {
+    return (dispatch) => {
+        dispatch({ type: CLOSE_MODAL });
+    };
+};
 
 export const googleAuthenticateStart =(token ) =>
     async (dispatch) => {
@@ -41,6 +46,21 @@ export const googleAuthenticate =(token,state, code ) =>
             }
     };
 
+export const googleAccountAds = (token, account_id) =>
+async (dispatch) => {
+        console.log(account_id)
+            try {
+                const res = await axios.get(`home/ad-accounts/${account_id}`, { headers: { Authorization: `${token}` } });
+                dispatch({
+                    // type: GOOGLE_AUTH_SUCCESS,
+                    // payload: { message: res.data.message, account_id: res.data.account_id }
+                });
+            } catch (err) {
+                dispatch({
+                    type:  GOOGLE_AUTH_FAIL
+                });
+            }
+    };
 export const googleSubmitAds =(token,account_id, ad_platform ) =>
     async (dispatch) => {
             try {

@@ -7,7 +7,13 @@ import {
     GOOGLE_ADS_ENABLE,
     GOOGLE_ADS_START,
     GOOGLE_ADS_ENABLE_FAIL,
-    GOOGLE_ADS_DISABLE
+    GOOGLE_ADS_DISABLE,
+    META_AUTH_SUCCESS,
+    META_ADS_ENABLE,
+    META_ADS_START,
+    META_ADS_ENABLE_FAIL,
+    META_ADS_DISABLE,
+    CLOSE_MODAL,
 } from './actions';
 
 export const initialState = {
@@ -22,7 +28,12 @@ export const initialState = {
     disable_twiter: false,
     show_form: false,
     window_url: '',
-    account_id: '',
+    account_id: {
+        "meta":"",
+        "google":"",
+        "twitter":"",
+        "pinterest":""
+    },
     window_location: false,
     message:''
 };
@@ -92,7 +103,10 @@ const accountReducer = (state = initialState, action) => {
                 ...state,
                 isLoggedIn: true,
                 disable_google: true,
-                account_id,
+                account_id: {
+                    ...state.account_id,
+                    google: account_id,
+                },
                 show_form: false,
                 message
             };
@@ -107,6 +121,66 @@ const accountReducer = (state = initialState, action) => {
                 account_id: ''
             };
         }
+            // META
+        case META_ADS_START: {
+            const { window_url } = action.payload;
+            return {
+                ...state,
+                isLoggedIn: true,
+                window_location:true,
+                window_url
+            };
+        }
+        case META_ADS_ENABLE: {
+            return {
+                ...state,
+                isLoggedIn: true,
+                ads_accounts: action.payload,
+                ad_platform: action.ad_platform,
+                submitted: true,
+                show_form: true,
+                window_url: ''
+            };
+        }
+        case META_ADS_ENABLE_FAIL: {
+            return {
+                ...state,
+                isLoggedIn: true,
+                ads_accounts: null,
+                window_location: false,
+                window_url: ''
+            };
+        }
+        case META_AUTH_SUCCESS: {
+            const { message, account_id } = action.payload;
+            return {
+                ...state,
+                isLoggedIn: true,
+                disable_meta: true,
+                account_id: {
+                    ...state.account_id,
+                    meta: account_id,
+                },
+                show_form: false,
+                message
+            };
+        }
+        case META_ADS_DISABLE: {
+            return {
+                ...state,
+                isLoggedIn: true,
+                disable_meta: false,
+                window_url: '',
+                show_form: false,
+                account_id: ''
+            };
+        }
+        case CLOSE_MODAL: {
+            return {
+                ...state,
+                show_form: false
+            };
+            }
         default: {
             return { ...state };
         }

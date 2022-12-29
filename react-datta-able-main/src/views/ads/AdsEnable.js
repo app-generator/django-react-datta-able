@@ -1,16 +1,24 @@
 import React, { useState, useEffect } from 'react';
-import { Row, Col, Card, Button, Form ,Modal} from 'react-bootstrap';
+import { Row, Col, Card, Button, Form, Modal } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
-import { useLocation,useHistory } from 'react-router-dom';
+import { useLocation, useHistory } from 'react-router-dom';
 import queryString from 'query-string';
-import { googleAuthenticateStart, googleAuthenticate, googleSubmitAds, googleDisableAds } from '../../store/googleAction';
+import {
+    googleAuthenticateStart,
+    googleAuthenticate,
+    googleSubmitAds,
+    googleDisableAds,
+    closeModal,
+    googleAccountAds
+} from '../../store/googleAction';
+import { metaAuthenticateStart, metaAuthenticate, metaSubmitAds, metaDisableAds } from '../../store/metaAction';
 
 const AdsEnable = () => {
     const [formME, setFormME] = useState({});
-    
+
     const dispatch = useDispatch();
     let location = useLocation();
-    const history =useHistory()
+    const history = useHistory();
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -18,16 +26,28 @@ const AdsEnable = () => {
     };
 
     const accounts = useSelector((state) => state.account);
-    const { ads_accounts, ad_platform, disable_google, disable_meta, disable_twiter, token, show_form, message } = accounts;
+    const { ads_accounts, ad_platform, disable_google, disable_meta, disable_twiter, token, show_form, message, account_id } = accounts;
 
+    const handleClose = () => {
+        dispatch(closeModal());
+    };
+    useEffect(() => {
+        if (account_id) {
+            dispatch(googleAccountAds(token, account_id));
+        }
+    }, [account_id]);
 
     useEffect(() => {
         const values = queryString.parse(location.search);
-        const state = values.state ? values.state : null;
-        const code = values.code ? values.code : null;
+        const google_state = values.state ? values.state : null;
+        const google_code = values.code ? values.code : null;
+        const meta_code = values.code ? values.code : null;
 
-        if (state && code) {
-            dispatch(googleAuthenticate(token, state, code));
+        if (google_state && google_code) {
+            dispatch(googleAuthenticate(token, google_state, google_code));
+        }
+        if (meta_code) {
+            dispatch(metaAuthenticate(token, meta_code));
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [location]);
@@ -35,6 +55,7 @@ const AdsEnable = () => {
     const handleSubmit = (event) => {
         event.preventDefault();
         dispatch(googleSubmitAds(token, formME.account_id, ad_platform));
+        handleClose();
         history.push('/app/ads-enable/accounts');
     };
 
@@ -43,9 +64,15 @@ const AdsEnable = () => {
     };
     const disableGoogle = () => {
         dispatch(googleDisableAds(token));
-        
     };
-
+    const continueWithMeta = async () => {
+        dispatch(metaAuthenticateStart(token));
+    };
+    const disableMeta = () => {
+        dispatch(metaDisableAds(token));
+    };
+    let all_ads = Array.isArray(ads_accounts);
+    console.log(all_ads);
     return (
         <React.Fragment>
             <Row>
@@ -67,7 +94,7 @@ const AdsEnable = () => {
                                             >
                                                 Disable Google Ads
                                             </Button>
-                                            <h5 className="col text-right">{accounts?.account_id}</h5>
+                                            <h5 className="col text-right">{accounts?.account_id.google}</h5>
                                         </>
                                     ) : (
                                         <>
@@ -101,7 +128,7 @@ const AdsEnable = () => {
                                             <Button onClick={() => disableGoogle()} aria-controls="basic-collapse" variant="primary">
                                                 Disable Twitter Ads
                                             </Button>
-                                            <h5 className="col text-right">{accounts?.account_id}</h5>
+                                            <h5 className="col text-right">{accounts?.account_id.twitter}</h5>
                                         </>
                                     ) : (
                                         <>
@@ -125,14 +152,14 @@ const AdsEnable = () => {
                                 <div className="col text-right">
                                     {disable_meta & (message === 'success') ? (
                                         <>
-                                            <Button onClick={() => disableGoogle()} aria-controls="basic-collapse" variant="primary">
+                                            <Button onClick={() => disableMeta()} aria-controls="basic-collapse" variant="primary">
                                                 Disable Meta Ads
                                             </Button>
-                                            <h5 className="col text-right">{accounts?.account_id}</h5>
+                                            <h5 className="col text-right">{accounts?.account_id.meta}</h5>
                                         </>
                                     ) : (
                                         <>
-                                            <Button onClick={() => continueWithGoogle()} aria-controls="basic-collapse" variant="primary">
+                                            <Button onClick={() => continueWithMeta()} aria-controls="basic-collapse" variant="primary">
                                                 Enable Meta Ads
                                             </Button>
                                         </>
@@ -142,19 +169,35 @@ const AdsEnable = () => {
                         </Card.Body>
                     </Card>
                 </Col>
-                <Modal show={show_form} size="md" aria-labelledby="contained-modal-title-vcenter" centered>
+                <Modal
+                    show={show_form}
+                    size="md"
+                    aria-labelledby="contained-modal-title-vcenter"
+                    centered
+                    backdrop="static"
+                    keyboard={false}
+                >
                     <Modal.Body>
                         <Form>
                             <Form.Group controlId="exampleForm.ControlSelect1">
                                 <Form.Label>Select Account</Form.Label>
                                 <Form.Control as="select" name="account_id" onChange={handleChange} value={formME?.account_id || ''}>
-                                    {ads_accounts?.map((acc) => {
-                                        return (
-                                            <option key={acc.account_name} value={acc.account_id}>
-                                                {acc.account_id}
-                                            </option>
-                                        );
-                                    })}
+                                    <option value={''}></option>
+                                    {all_ads
+                                        ? ads_accounts?.map((acc) => {
+                                              return (
+                                                  <option key={acc.account_name} value={acc.account_id}>
+                                                      {acc.account_id}
+                                                  </option>
+                                              );
+                                          })
+                                        : [{ account_name: ads_accounts, account_id: ads_accounts }]?.map((acc) => {
+                                              return (
+                                                  <option key={acc.account_name} value={acc.account_id}>
+                                                      {acc.account_id}
+                                                  </option>
+                                              );
+                                          })}
                                 </Form.Control>
                             </Form.Group>
                         </Form>
@@ -163,10 +206,13 @@ const AdsEnable = () => {
                         <Button
                             variant="primary"
                             onClick={(e) => {
-                                handleSubmit(e, formME);
+                                handleSubmit(e);
                             }}
                         >
                             Submit
+                        </Button>
+                        <Button variant="secondary" onClick={handleClose}>
+                            Close
                         </Button>
                     </Modal.Footer>
                 </Modal>
