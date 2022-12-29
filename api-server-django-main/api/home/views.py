@@ -1,5 +1,6 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
+from .serializers import AuthorizationSerializers
 from datetime import datetime
 
 
@@ -28,3 +29,8 @@ class Add_Account(APIView):
             context['title'] = 'Connected ad accounts'
 
         return Response({"message": 'success', 'account_id': account})
+    
+    def get(self,request,format=None):
+        account_ads = Authorizations.objects.filter(user=request.user)
+        serializer = AuthorizationSerializers(account_ads,many=True)
+        return Response({"message": 'success', 'account_id': serializer.data})

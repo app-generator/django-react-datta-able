@@ -37,7 +37,8 @@ class LoginSerializer(serializers.Serializer):
         user = authenticate(username=email, password=password)
 
         if user is None:
-            raise exceptions.AuthenticationFailed({"success": False, "msg": "Wrong credentials"})
+            raise exceptions.AuthenticationFailed(
+                {"success": False, "msg": "Wrong credentials"})
 
         if not user.is_active:
             raise exceptions.ValidationError(
@@ -49,7 +50,8 @@ class LoginSerializer(serializers.Serializer):
             if not session.token:
                 raise ValueError
 
-            jwt.decode(session.token, settings.SECRET_KEY, algorithms=["HS256"])
+            jwt.decode(session.token, settings.SECRET_KEY,
+                       algorithms=["HS256"])
 
         except (ObjectDoesNotExist, ValueError, jwt.ExpiredSignatureError):
             session = ActiveSession.objects.create(
@@ -58,6 +60,7 @@ class LoginSerializer(serializers.Serializer):
 
         return {
             "success": True,
+            'msg': 'login successful',
             "token": session.token,
             "user": {"_id": user.pk, "username": user.username, "email": user.email},
         }

@@ -11,3 +11,4 @@ google-auth-oauthlib==0.5.2
 googleapis-common-protos==1.56.4
 facebook-business==14.0.0
 facebook-sdk==3.1.0
+python-decouple

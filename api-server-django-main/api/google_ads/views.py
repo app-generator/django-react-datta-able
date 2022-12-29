@@ -4,7 +4,7 @@ from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework.response import Response
 import os
-import environ
+from decouple import config
 import sys
 from ..home.models import Authorizations
 from google.ads.googleads.client import GoogleAdsClient
@@ -14,24 +14,23 @@ from .models import *
 
 from datetime import datetime
 
-env = environ.Env(
-    # set casting, default value
-    DEBUG=(bool, True)
-)
+# env = environ.Env(
+#     # set casting, default value
+#     DEBUG=(bool, True)
+# )
 
 # Create your views here.
 CLIENT_CONFIG = {'web': {
-    'client_id': os.environ.get('GOOGLE_CLIENT_ID', None),
-    'client_id': os.environ.get('GOOGLE_CLIENT_ID', None),
-    'project_id': os.environ.get('GOOGLE_PROJECT_ID', None),
+    'client_id': config('GOOGLE_CLIENT_ID'),
+    'client_id': config('GOOGLE_CLIENT_ID'),
+    'project_id': config('GOOGLE_PROJECT_ID'),
     'auth_uri': 'https://accounts.google.com/o/oauth2/auth',
     'token_uri': 'https://www.googleapis.com/oauth2/v3/token',
     'auth_provider_x509_cert_url': 'https://www.googleapis.com/oauth2/v1/certs',
-    'client_secret': os.environ.get('GOOGLE_CLIENT_SECRET', None),
+    'client_secret': config('GOOGLE_CLIENT_SECRET'),
     'redirect_uris': "http://127.0.0.1:8000/api/google_ads/oauth",
-    'javascript_origins': os.environ.get('GOOGLE_JAVASCRIPT_ORIGINS', None), }}
+    'javascript_origins': config('GOOGLE_JAVASCRIPT_ORIGINS') }}
 
-print(CLIENT_CONFIG)
 # This scope will allow the application to manage ad words accounts
 SCOPES = ['https://www.googleapis.com/auth/adwords']
 os.environ['OAUTHLIB_RELAX_TOKEN_SCOPE'] = '1'
@@ -172,12 +171,12 @@ def age_range_criterion(client, agerange, resourcename, forwhat):
 
 def call_client(request):
 
-    print(os.environ.get("GOOGLE_DEVELOPER_TOKEN", None))
+    print(config("GOOGLE_DEVELOPER_TOKEN", None))
     try:
         if 'credentials' in request.session:
             credentials = request.session['credentials']
         else:
-            credentials = {'developer_token':  os.environ.get(
+            credentials = {'developer_token':  config(
                 "GOOGLE_DEVELOPER_TOKEN", None), 'use_proto_plus': True}
         user = Authorizations.objects.get(
             user=request.user, ad_platform='google_ads')
@@ -201,7 +200,7 @@ def call_client(request):
 
 def credentials_to_dict(credentials):
     try:
-        cr = {'developer_token':  os.environ.get("GOOGLE_DEVELOPER_TOKEN", None),
+        cr = {'developer_token':  config("GOOGLE_DEVELOPER_TOKEN"),
               'use_proto_plus': True,
               'refresh_token': credentials.refresh_token,
               'client_id': credentials.client_id,

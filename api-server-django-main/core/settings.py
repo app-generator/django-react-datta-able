@@ -10,7 +10,8 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
-import os, environ
+import os
+import environ
 from pathlib import Path
 
 env = environ.Env(
@@ -28,13 +29,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = env('SECRET_KEY', default='insecure-S#perS3crEt_007')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-try:
-    # expects 1 or 0
-    DEBUG = int(os.environ.get("DEBUG", default=0))
-except:
-    DEBUG = False
+# try:
+#     # expects 1 or 0
+#     DEBUG = int(os.environ.get("DEBUG", default=0))
+# except:
+#     DEBUG = False
 
 ALLOWED_HOSTS = env("DJANGO_ALLOWED_HOSTS", default="*").split(" ")
 
@@ -92,13 +93,13 @@ WSGI_APPLICATION = "core.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': 'db.sqlite3',
     }
 }
-
 
 # DATABASES = {
 #     "default": {
@@ -167,13 +168,14 @@ REST_FRAMEWORK = {
 }
 
 # ##################################################################### #
-#  CORS 
+#  CORS
 # ##################################################################### #
 
-CORS_ALLOW_ALL_ORIGINS=True
+CORS_ALLOW_ALL_ORIGINS = True
 
 # Load the default ones
-CORS_ALLOWED_ORIGINS = ["http://localhost:3000", "http://127.0.0.1:3000"]
+CORS_ALLOWED_ORIGINS = ["http://localhost:3000",
+                        "http://localhost:3001", "http://127.0.0.1:3000"]
 
 # Leaded from Environment
 CORS_ALLOWED_ORIGINS_ENV = env("CORS_ALLOWED_ORIGINS", default=None)
@@ -183,7 +185,7 @@ if CORS_ALLOWED_ORIGINS_ENV:
 
 
 # ##################################################################### #
-#  TESTING 
+#  TESTING
 # ##################################################################### #
 
 TESTING = False
