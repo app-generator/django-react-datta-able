@@ -57,10 +57,9 @@ export const getAccountAdsGoogle = (token) => async (dispatch) => {
         
         try {
             const res = await axios.get(`home/ad-accounts/`, { headers: { Authorization: `${token}` } });
-            console.log(res.data);
             dispatch({
                 type: GET_GOOGLE_ACCOUNT_SUCCESS,
-                payload: { message: res.data.message, account_id: res.data.account_id[0]?.account_id }
+                payload: { message: res.data.message, accounts: res.data.accounts,ads:res.data.ads }
             });
         } catch (err) {
             dispatch({
@@ -74,7 +73,7 @@ export const getAccountAdsMeta = (token) => async (dispatch) => {
             const res = await axios.get(`home/ad-accounts/`, { headers: { Authorization: `${token}` } });
             dispatch({
                 type: GET_META_ACCOUNT_SUCCESS,
-                payload: { message: res.data.message, account_id: res.data.account_id[1]?.account_id }
+                payload: { message: res.data.message, accounts: res.data.accounts,ads:res.data.ads }
             });
         } catch (err) {
             dispatch({

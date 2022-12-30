@@ -29,17 +29,18 @@ const AdsEnable = () => {
     };
 
     const accounts = useSelector((state) => state.account);
-    const { ads_accounts, ad_platform, disable_google, disable_meta, disable_twiter, token, show_form, message, account_id } = accounts;
+    const { ads_accounts, ad_platform, disable_google, disable_meta, disable_twiter,
+         token, show_form, message, account_id,Ads_account_id } = accounts;
 
     const handleClose = () => {
         dispatch(closeModal());
     };
-    // useEffect(() => {
+    useEffect(() => {
     //     if (account_id.google || account_id.meta) {
     //     }
-    //     dispatch(getAccountAdsMeta(token));
-    //     dispatch(getAccountAdsGoogle(token));
-    // }, [account_id.google || account_id.meta]);
+        dispatch(getAccountAdsMeta(token));
+        dispatch(getAccountAdsGoogle(token));
+    }, [account_id.google || account_id.meta]);
 
     useEffect(() => {
         const values = queryString.parse(location.search);
@@ -76,7 +77,7 @@ const AdsEnable = () => {
         dispatch(metaDisableAds(token));
     };
     let all_ads = Array.isArray(ads_accounts);
-    console.log(all_ads);
+
     return (
         <React.Fragment>
             <Row>
@@ -98,7 +99,7 @@ const AdsEnable = () => {
                                             >
                                                 Disable Google Ads
                                             </Button>
-                                            <h5 className="col text-right">{accounts?.account_id.google}</h5>
+                                            <h5 className="col text-right">{Ads_account_id?Ads_account_id.google:account_id.google}</h5>
                                         </>
                                     ) : (
                                         <>
@@ -159,7 +160,7 @@ const AdsEnable = () => {
                                             <Button onClick={() => disableMeta()} aria-controls="basic-collapse" variant="success">
                                                 Disable Meta Ads
                                             </Button>
-                                            <h5 className="col text-right">{accounts?.account_id.meta}</h5>
+                                            <h5 className="col text-right">{Ads_account_id?Ads_account_id.meta:account_id.meta}</h5>
                                         </>
                                     ) : (
                                         <>
@@ -184,9 +185,9 @@ const AdsEnable = () => {
                     <Modal.Body>
                         <Form>
                             <Form.Group controlId="exampleForm.ControlSelect1">
-                                <Form.Label>Select Account</Form.Label>
+                                <Form.Label>Ads Account Form</Form.Label>
                                 <Form.Control as="select" name="account_id" onChange={handleChange} value={formME?.account_id || ''}>
-                                    <option value={''}></option>
+                                    <option value={''} disabled>select account</option>
                                     {all_ads
                                         ? ads_accounts?.map((acc) => {
                                               return (

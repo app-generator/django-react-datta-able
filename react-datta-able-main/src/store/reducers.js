@@ -14,6 +14,7 @@ const reducers = combineReducers({
         },
         accountReducer
     ),
+    // account:accountReducer,
     form: formReducer
 });
 

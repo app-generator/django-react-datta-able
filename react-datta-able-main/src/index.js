@@ -16,6 +16,7 @@ import { store, persister } from './store';
 ReactDOM.render(
     <Provider store={store}>
         <ConfigProvider>
+                {/* <App /> */}
             <PersistGate loading={null} persistor={persister}>
                 <App />
             </PersistGate>

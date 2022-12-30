@@ -25,7 +25,6 @@ export const initialState = {
     isLoggedIn: false,
     isInitialized: false,
     user: null,
-    ads_accounts: null,
     ad_platform: null,
     disable_google: false,
     disable_meta: false,
@@ -33,6 +32,14 @@ export const initialState = {
     show_form: false,
     window_url: '',
     account_id: {
+        meta: '',
+        google: '',
+        twitter: '',
+        pinterest: ''
+    },
+    ads_accounts:"",
+    // Ads_account_id: null,
+    Ads_account_id: {
         meta: '',
         google: '',
         twitter: '',
@@ -74,24 +81,31 @@ const accountReducer = (state = initialState, action) => {
         }
         // google
         case GET_GOOGLE_ACCOUNT_SUCCESS: {
-            const { message, account_id } = action.payload;
+            let google_index;
+            const { message, accounts } = action.payload;
+            const google_ads_id = accounts?.map((ads,idx) =>{
+                if(ads.ad_platform_data.account_platform === "google_ads" && message === 'success'){
+                    google_index = idx
+                        return ads
+                }})
             return {
                 ...state,
                 message,
-                disable_google: true,
-                account_id: {
-                    ...state.account_id,
-                    google: account_id
-                }
+                disable_google:google_ads_id[google_index].ad_platform_data.show,
+                Ads_account_id:{
+                    ...state.Ads_account_id,
+                    google: google_ads_id[google_index].account_id,
+                },
             };
         }
         case GET_GOOGLE_ACCOUNT_FAIL: {
             return {
                 ...state,
                 disable_google: false,
-                account_id: {
-                    ...state.account_id,
-                    google: ''
+                  Ads_account_id: {
+                    ...state.Ads_account_id,
+                    google: '',
+                    // meta: google_ads_id[1]?.account_id
                 }
             };
         }
@@ -155,14 +169,23 @@ const accountReducer = (state = initialState, action) => {
         // META
 
         case GET_META_ACCOUNT_SUCCESS: {
-            const { account_id } = action.payload;
+           let meta_index;
+            const { message, accounts } = action.payload;
+            const meta_ads_id = accounts?.map((ads,idx) =>{
+                if(ads.ad_platform_data.account_platform === "meta_ads" && message === 'success'){
+                    meta_index = idx
+                        return ads
+                }
+            })
+
             return {
                 ...state,
-                disable_meta: true,
-                account_id: {
-                    ...state.account_id,
-                    meta: account_id
-                }
+                message,
+                disable_meta:meta_ads_id[meta_index].ad_platform_data.show,
+                Ads_account_id:{
+                    ...state.Ads_account_id,
+                    meta: meta_ads_id[meta_index].account_name,
+                },
             };
         }
         case GET_META_ACCOUNT_FAIL: {
@@ -227,6 +250,10 @@ const accountReducer = (state = initialState, action) => {
                 show_form: false,
                 account_id: {
                     ...state.account_id,
+                    meta: ''
+                },
+                Ads_account_id: {
+                    ...state.Ads_account_id,
                     meta: ''
                 }
             };
