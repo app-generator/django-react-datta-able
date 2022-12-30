@@ -21,12 +21,17 @@ env = environ.Env(
     DEBUG=(bool, True)
 )
 
-META_APP_ID = os.environ.get('META_APP_ID', None)
-META_APP_SECRET = os.environ.get('META_APP_SECRET', None)
-META_APP_TOKEN = os.environ.get('META_APP_TOKEN', None)
-META_SYSTEM_USER_ACCESS_TOKEN = os.environ.get('META_SYSTEM_USER_ACCESS_TOKEN', None)
+# META_APP_ID = os.environ.get('META_APP_ID', None)
+# META_APP_SECRET = os.environ.get('META_APP_SECRET', None)
+# META_APP_TOKEN = os.environ.get('META_APP_TOKEN', None)
+# META_SYSTEM_USER_ACCESS_TOKEN = os.environ.get('META_SYSTEM_USER_ACCESS_TOKEN', None)
 
 
+
+META_SYSTEM_USER_ACCESS_TOKEN = "EAAKWk7F1gDQBADxZCwVG6oeWvYZAiEMRdrCoIZArKFAym1LZAJuO7PRDZCN3ceTD5FTapKLC1CJCBlnfkxwmFlAEevUxU68yAg6EaWRc7HALHpIcX0VIAOg1EZBrGzXxHOxoMOjsJ0UpGMbN31vr2QdiLQfh0O91OFipuVFujKVoWS6K7ZCMXjQz0BB3lhHHqpiwnx3kfJHhgZDZD"
+META_APP_ID = "728511035047988"
+META_APP_SECRET = "6e6799dbe8a129f4a6066232c955925e"
+META_APP_TOKEN = "728511035047988|JIudeO3Vh3MPuojHrozIMQTta84"
 
 
 class Enable(APIView):
@@ -129,4 +134,4 @@ class Oauth(APIView):
                 accounts.append(account)
                 print('ad_account_info g')
             print('ad_account_info h')
-            return Response({'accounts': account_name, 'ad_platform': 'meta_ads'})
+            return Response({'accounts': accounts, 'ad_platform': 'meta_ads'})

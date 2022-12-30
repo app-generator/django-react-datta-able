@@ -21,6 +21,11 @@ class Authorizations(models.Model):
 
     def __str__(self):
         return self.account_id
+    def ad_platform_data(self):
+        return {
+			"account_platform":self.ad_platform,
+			"show":True if self.pk else False
+		}
 
     class Meta:
         ordering = ["-date_time"]
