@@ -17,7 +17,9 @@ import {
 } from '../../store/googleAction';
 
 const AdsEnable = () => {
-    const [formME, setFormME] = useState({});
+    const [formME, setFormME] = useState({
+        showButton: true
+    });
 
     const dispatch = useDispatch();
     let location = useLocation();
@@ -25,7 +27,7 @@ const AdsEnable = () => {
 
     const handleChange = (e) => {
         const { name, value } = e.target;
-        setFormME((prev) => ({ ...prev, [name]: value }));
+        setFormME((prev) => ({ ...prev, [name]: value, showButton: false }));
     };
 
     const accounts = useSelector((state) => state.account);
@@ -99,7 +101,7 @@ const AdsEnable = () => {
                                             >
                                                 Disable Google Ads
                                             </Button>
-                                            <h5 className="col text-right">{Ads_account_id?Ads_account_id.google:account_id.google}</h5>
+                                            <h5 className="col text-right">{Ads_account_id ? Ads_account_id.google : account_id.google}</h5>
                                         </>
                                     ) : (
                                         <>
@@ -160,7 +162,7 @@ const AdsEnable = () => {
                                             <Button onClick={() => disableMeta()} aria-controls="basic-collapse" variant="success">
                                                 Disable Meta Ads
                                             </Button>
-                                            <h5 className="col text-right">{Ads_account_id?Ads_account_id.meta:account_id.meta}</h5>
+                                            <h5 className="col text-right">{Ads_account_id ? Ads_account_id.meta : account_id.meta}</h5>
                                         </>
                                     ) : (
                                         <>
@@ -174,32 +176,27 @@ const AdsEnable = () => {
                         </Card.Body>
                     </Card>
                 </Col>
-                <Modal
-                    show={show_form}
-                    size="md"
-                    aria-labelledby="contained-modal-title-vcenter"
-                    centered
-                    backdrop="static"
-                    keyboard={false}
-                >
+                <Modal show={show_form} size="md" aria-labelledby="contained-modal-title-vcenter" centered backdrop="static" keyboard={false}>
                     <Modal.Body>
                         <Form>
                             <Form.Group controlId="exampleForm.ControlSelect1">
                                 <Form.Label>Ads Account Form</Form.Label>
                                 <Form.Control as="select" name="account_id" onChange={handleChange} value={formME?.account_id || ''}>
-                                    <option value={''} disabled>select account</option>
+                                    <option value={''} disabled>
+                                        select account
+                                    </option>
                                     {all_ads
                                         ? ads_accounts?.map((acc) => {
                                               return (
-                                                  <option key={acc.account_name} value={acc.account_id}>
-                                                      {acc.account_id}
+                                                  <option key={acc.account_name} value={acc.account_name}>
+                                                      {acc.account_name}
                                                   </option>
                                               );
                                           })
                                         : [{ account_name: ads_accounts, account_id: ads_accounts }]?.map((acc) => {
                                               return (
-                                                  <option key={acc.account_name} value={acc.account_id}>
-                                                      {acc.account_id}
+                                                  <option key={acc.account_name} value={acc.account_name}>
+                                                      {acc.account_name}
                                                   </option>
                                               );
                                           })}
@@ -213,6 +210,7 @@ const AdsEnable = () => {
                             onClick={(e) => {
                                 handleSubmit(e);
                             }}
+                            disabled={formME.showButton}
                         >
                             Submit
                         </Button>
