@@ -32,12 +32,6 @@ class Add_Account(APIView):
     
     def get(self,request,format=None):
         account_ads = Authorizations.objects.filter(user=request.user)
-        print(account_ads)
-        for ad in account_ads:
-            print(ad)
-        # if account_ads.ad_platform == "google_ads":
-        #     serializer = AuthorizationSerializers(account_ads,many=True)
-        #     return Response({"message": 'success', 'account_id': serializer.data,"ads_google":True})
         if account_ads:
             serializer = AuthorizationSerializers(account_ads,many=True)
             return Response({"message": 'success', 'accounts': serializer.data,"ads":True})

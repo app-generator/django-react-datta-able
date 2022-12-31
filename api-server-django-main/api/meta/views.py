@@ -129,4 +129,4 @@ class Oauth(APIView):
                 accounts.append(account)
                 print('ad_account_info g')
             print('ad_account_info h')
-            return Response({'accounts': account_name, 'ad_platform': 'meta_ads'})
+            return Response({'accounts': accounts, 'ad_platform': 'meta_ads'})
