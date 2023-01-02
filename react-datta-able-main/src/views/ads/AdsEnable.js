@@ -101,7 +101,9 @@ const AdsEnable = () => {
                                             >
                                                 Disable Google Ads
                                             </Button>
-                                            <h5 className="col text-right">{Ads_account_id ? Ads_account_id.google : account_id.google}</h5>
+                                            <p className="col text-right fw-bolder">
+                                                {Ads_account_id ? Ads_account_id.google : account_id.google}
+                                            </p>
                                         </>
                                     ) : (
                                         <>
@@ -135,7 +137,7 @@ const AdsEnable = () => {
                                             <Button onClick={() => disableGoogle()} aria-controls="basic-collapse" variant="primary">
                                                 Disable Twitter Ads
                                             </Button>
-                                            <h5 className="col text-right">{accounts?.account_id.twitter}</h5>
+                                            <p className="col text-right fw-bolder">{accounts?.account_id.twitter}</p>
                                         </>
                                     ) : (
                                         <>
@@ -162,7 +164,9 @@ const AdsEnable = () => {
                                             <Button onClick={() => disableMeta()} aria-controls="basic-collapse" variant="success">
                                                 Disable Meta Ads
                                             </Button>
-                                            <h5 className="col text-right">{Ads_account_id ? Ads_account_id.meta : account_id.meta}</h5>
+                                            <p className="col text-right fw-bolder">
+                                                {Ads_account_id ? Ads_account_id.meta : account_id.meta}
+                                            </p>
                                         </>
                                     ) : (
                                         <>
@@ -176,7 +180,14 @@ const AdsEnable = () => {
                         </Card.Body>
                     </Card>
                 </Col>
-                <Modal show={show_form} size="md" aria-labelledby="contained-modal-title-vcenter" centered backdrop="static" keyboard={false}>
+                <Modal
+                    show={show_form}
+                    size="md"
+                    aria-labelledby="contained-modal-title-vcenter"
+                    centered
+                    backdrop="static"
+                    keyboard={false}
+                >
                     <Modal.Body>
                         <Form>
                             <Form.Group controlId="exampleForm.ControlSelect1">
