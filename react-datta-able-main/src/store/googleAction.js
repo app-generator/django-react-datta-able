@@ -128,6 +128,8 @@ export const SubmitAds = (token, account_id, ad_platform) => async (dispatch) =>
             type: ad_platform === 'meta_ads' ? META_AUTH_SUCCESS : ad_platform === 'google_ads' ? GOOGLE_AUTH_SUCCESS : '',
             payload: { message: res.data.message, account_id: res.data.account_id }
         });
+        dispatch(getAccountAdsMeta(token))
+        dispatch(getAccountAdsGoogle(token))
     } catch (err) {
         dispatch({
             type: ad_platform === 'meta_ads' ? META_AUTH_FAIL : ad_platform === 'google_ads' ? GOOGLE_AUTH_FAIL : ''

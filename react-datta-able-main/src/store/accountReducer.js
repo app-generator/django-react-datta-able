@@ -28,6 +28,7 @@ export const initialState = {
     ad_platform: null,
     disable_google: false,
     disable_meta: false,
+    meta_state: false,
     disable_twiter: false,
     show_form: false,
     window_url: '',
@@ -162,7 +163,11 @@ const accountReducer = (state = initialState, action) => {
                 account_id: {
                     ...state.account_id,
                     google: ''
-                }
+                },
+                Ads_account_id:{
+                    ...state.Ads_account_id,
+                    google: ''
+                },
             };
         }
 
@@ -192,7 +197,7 @@ const accountReducer = (state = initialState, action) => {
             return {
                 ...state,
                 disable_meta: false,
-                account_id: {
+                Ads_account_id: {
                     ...state.account_id,
                     meta: ''
                 }
@@ -204,7 +209,8 @@ const accountReducer = (state = initialState, action) => {
                 ...state,
                 isLoggedIn: true,
                 window_location: true,
-                window_url
+                window_url,
+                meta_state:true
             };
         }
         case META_ADS_ENABLE: {
@@ -224,7 +230,8 @@ const accountReducer = (state = initialState, action) => {
                 isLoggedIn: true,
                 ads_accounts: null,
                 window_location: false,
-                window_url: ''
+                window_url: '',
+                meta_state:false
             };
         }
         case META_AUTH_SUCCESS: {
@@ -255,7 +262,8 @@ const accountReducer = (state = initialState, action) => {
                 Ads_account_id: {
                     ...state.Ads_account_id,
                     meta: ''
-                }
+                },
+                meta_state: false
             };
         }
         case CLOSE_MODAL: {

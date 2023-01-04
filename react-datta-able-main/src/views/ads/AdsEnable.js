@@ -31,8 +31,19 @@ const AdsEnable = () => {
     };
 
     const accounts = useSelector((state) => state.account);
-    const { ads_accounts, ad_platform, disable_google, disable_meta, disable_twiter,
-         token, show_form, message, account_id,Ads_account_id } = accounts;
+    const {
+        ads_accounts,
+        ad_platform,
+        disable_google,
+        disable_meta,
+        disable_twiter,
+        token,
+        show_form,
+        message,
+        account_id,
+        Ads_account_id,
+        meta_state
+    } = accounts;
 
     const handleClose = () => {
         dispatch(closeModal());
@@ -53,7 +64,7 @@ const AdsEnable = () => {
         if (google_state && google_code) {
             dispatch(googleAuthenticate(token, google_state, google_code));
         }
-        if (meta_code) {
+        if (meta_code && meta_state) {
             dispatch(metaAuthenticate(token, meta_code));
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
