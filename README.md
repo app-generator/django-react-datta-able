@@ -30,12 +30,11 @@ The backend logic is provided by a simple, `easy-to-extend` API Server that mana
 
 ## ✨ `Django API` Features
 
-- Stack: : `Django` / `DRF` / **SQLite** 
+- Stack: `Django` / `DRF` / **SQLite** 
 - `Up-to-date dependencies`
 - **DB Layer**: Django Native `ORM`, `SQLite` persistence
 - **Auth**: JWT tokens managed via `PyJWT`
 - [API Definition](https://docs.appseed.us/boilerplate-code/api-unified-definition) - the unified API structure implemented by this server
-
 
 <br /> 
 
